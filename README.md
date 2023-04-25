@@ -4,6 +4,9 @@ This provides a range of bash scripts to examine small viral RNA signatures
 File 1: sRNA_histogram.sh 
 Takes a BAM file (in this case input.bam) and provides a histogram output for mapped read lengths and also the first nucleotide of both forward and reverse orientation.
 
+Usage sRNA_histogram.sh input.bam
+
+```
 Example output:
 Chromosome: MT032308.1_Toscana_virus_isolate_1500590_segment_L_complete_sequence
 Sense Read Sizes:
@@ -44,4 +47,5 @@ Size  Counts  A  T  G  C
 29 46 16 9 15 6
 30 9 3  3 3
 31 2 1  1
+```
 
