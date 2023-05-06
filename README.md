@@ -2,13 +2,13 @@
 This provides a range of bash scripts to examine small viral RNA signatures
 
 File 1: sRNA_histogram.sh 
-Takes a BAM file (in this case input.bam) and provides a histogram output for mapped read lengths and also the first nucleotide of both forward and reverse orientation.
-
-Usage sRNA_histogram.sh input.bam
-
+Takes a BAM file (in this case TOSV.bam) and provides a histogram output for mapped read lengths and also the first nucleotide of both forward and reverse orientation.
+Requires samtools (tested with samtools v1.13), does not require index file.
+Usage:
+bash sRNA_histogram.sh input.bam
 ```
 Example output:
-Chromosome: MT032308.1_Toscana_virus_isolate_1500590_segment_L_complete_sequence
+Chromosome: MT032308.1_Toscana_virus_isolate_1500590_segment_L
 Sense Read Sizes:
 Size  Counts  A  T  G  C
 ----  ------  -  -  -  -
