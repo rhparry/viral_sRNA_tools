@@ -1,7 +1,7 @@
 # viral_sRNA_bash
 This provides a range of bash scripts to examine small viral RNA signatures
 
-File 1: sRNA_histogram.sh 
+## sRNA_histogram.sh 
 Takes a BAM file (in this case TOSV.bam) and provides a histogram output for mapped read lengths and also the first nucleotide of both forward and reverse orientation.
 Requires samtools (tested with samtools v1.13), does not require index file.
 Usage:
