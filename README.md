@@ -48,4 +48,7 @@ Size  Counts  A  T  G  C
 30 9 3  3 3
 31 2 1  1
 ```
-
+## viral_sRNA_coverage.sh
+Takes a BAM file requires samtools v1.13 and bedtools v2.30.0 and it produces 2 BAM files, one for vsiRNAs (21nt) mapped reads, and another for vpiRNAs (25-30nts). It produces three files per chromosome for both vsiRNA and vpiRNA BAM files: coverage_neg.tab coverage_pos.tab and a combined coverage.tab.
+Usage:
+bash viral_sRNA_coverage.sh input.bam
