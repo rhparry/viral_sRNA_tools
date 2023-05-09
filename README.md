@@ -3,9 +3,12 @@ This provides a range of bash scripts to examine small viral RNA signatures
 
 ## sRNA_histogram.sh 
 Takes a BAM file (in this case TOSV.bam) and provides a histogram output for mapped read lengths and also the first nucleotide of both forward and reverse orientation.
-Requires samtools (tested with samtools v1.13), does not require index file.
+
+Tested with samtools v1.13, does not require index file.
+
 Usage:
-bash sRNA_histogram.sh input.bam
+
+>bash sRNA_histogram.sh input.bam
 ```
 Example output:
 Chromosome: MT032308.1_Toscana_virus_isolate_1500590_segment_L
@@ -49,6 +52,10 @@ Size  Counts  A  T  G  C
 31 2 1  1
 ```
 ## viral_sRNA_coverage.sh
-Takes a BAM file (tested with samtools v1.13, bedtools v2.30.0) and it produces 2 BAM files, one for vsiRNAs (21nt) mapped reads, and another for vpiRNAs (25-30nts). It produces three files per chromosome for both vsiRNA and vpiRNA BAM files: coverage_neg.tab coverage_pos.tab and a combined coverage.tab.
+Takes a BAM file and subsets the bam file into 2 BAM files, one for vsiRNAs (21nt) mapped reads, and another for vpiRNAs (25-30nts). After producing the subsetted BAM files using bedtools it calculates coverage for each chromosome within the BAM file and produces three files per chromosome using the following nomenclature: {chromsomename}_21nt/piRNA_coverage_neg.tab {chromsomename}_21nt/piRNA_coverage_pos.tab and a {chromsomename}_combined coverage.tab.
+
+Tested with samtools v1.13 and bedtools v2.30.0
+
 Usage:
-bash viral_sRNA_coverage.sh input.bam
+
+>bash viral_sRNA_coverage.sh input.bam
