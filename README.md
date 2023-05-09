@@ -8,6 +8,13 @@ Usage
 
 >bash fastq_histogram.sh input.fastq.gz
 
+## mapping_vRNAs.sh
+Takes a fastq file and maps it against a reference using bowtie2 and suppresses unaligned reads and outputs a sorted bam file with only mapped reads. Tested with bowtie2 v2.4.5 and samtools v1.13.
+
+Usage
+
+>bash mapping_vRNAs.sh input.fastq reference.fasta
+
 ## sRNA_histogram.sh 
 Takes a BAM file (in this case TOSV.bam) and provides a histogram output for mapped read lengths and also the first nucleotide of both forward and reverse orientation.
 
