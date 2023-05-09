@@ -1,6 +1,13 @@
 # viral_sRNA_bash
 This provides a range of bash scripts to examine small viral RNA signatures
 
+## fastq_histogram.sh
+Takes a fastq file (gzipped or otherwise) and calculates a histogram of read lengths and also outputs a table of the first nucleotide sequence.
+
+Usage 
+
+>bash fastq_histogram.sh input.fastq.gz
+
 ## sRNA_histogram.sh 
 Takes a BAM file (in this case TOSV.bam) and provides a histogram output for mapped read lengths and also the first nucleotide of both forward and reverse orientation.
 
