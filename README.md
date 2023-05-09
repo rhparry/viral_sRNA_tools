@@ -1,21 +1,21 @@
 # viral_sRNA_bash
-This provides a range of bash scripts to examine small viral RNA signatures
+This provides a range of bash scripts to examine small viral RNA signatures. To ensure you have compatibility for the BAM file with each script I would recommend running these scripts in the order that they have been numbered.
 
-## fastq_histogram.sh
+## 1 fastq_histogram.sh
 Takes a fastq file (gzipped or otherwise) and calculates a histogram of read lengths and also outputs a table of the first nucleotide sequence.
 
 Usage 
 
 >bash fastq_histogram.sh input.fastq.gz
 
-## mapping_vRNAs.sh
+## 2 mapping_vRNAs.sh
 Takes a fastq file and maps it against a reference using bowtie2 and suppresses unaligned reads and outputs a sorted bam file with only mapped reads. Tested with bowtie2 v2.4.5 and samtools v1.13.
 
 Usage
 
 >bash mapping_vRNAs.sh input.fastq reference.fasta
 
-## sRNA_histogram.sh 
+## 3 sRNA_histogram.sh 
 Takes a sorted BAM file (in this case TOSV.bam) and provides a histogram output for mapped read lengths and also the first nucleotide of both forward and reverse orientation.
 
 Tested with samtools v1.13, does not require index file.
@@ -65,7 +65,7 @@ Size  Counts  A  T  G  C
 30 9 3  3 3
 31 2 1  1
 ```
-## viral_sRNA_coverage.sh
+## 4 viral_sRNA_coverage.sh
 Takes a BAM file and subsets the bam file into 2 BAM files, one for vsiRNAs (21nt) mapped reads, and another for vpiRNAs (25-30nts). After producing the subsetted BAM files using bedtools it calculates coverage for each chromosome within the BAM file and produces three files per chromosome using the following nomenclature: {chromsomename}_21nt/piRNA_coverage_neg.tab {chromsomename}_21nt/piRNA_coverage_pos.tab and a {chromsomename}_combined coverage.tab.
 
 Tested with samtools v1.13 and bedtools v2.30.0
@@ -73,3 +73,11 @@ Tested with samtools v1.13 and bedtools v2.30.0
 Usage:
 
 >bash viral_sRNA_coverage.sh input.bam
+
+## 5 extract_fw_rv_fasta.sh
+Takes a sorted BAM file as input and outputs two fasta files, one for the forward reads and one for the reverse reads per chromosome using the following nomenclature:
+{bamefileprefix}_{chromsomename}_fw.fa and {bamefileprefix}_{chromsomename}_rv.fa. Tested with with samtools v 1.13.
+
+Usage:
+
+>bash bash extract_fw_rv_fasta.sh input.bam
