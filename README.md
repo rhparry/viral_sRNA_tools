@@ -76,8 +76,10 @@ Usage:
 
 ## 5 extract_fw_rv_fasta.sh
 Takes a sorted BAM file as input and outputs two fasta files, one for the forward reads and one for the reverse reads per chromosome using the following nomenclature:
-{bamefileprefix}_{chromsomename}_fw.fa and {bamefileprefix}_{chromsomename}_rv.fa. Tested with with samtools v 1.13.
+{bamfileprefix}_{chromsomename}_fw.fa and {bamfileprefix}_{chromsomename}_rv.fa. 
+
+Tested with with samtools v 1.13.
 
 Usage:
 
->bash bash extract_fw_rv_fasta.sh input.bam
+>bash extract_fw_rv_fasta.sh input.bam
