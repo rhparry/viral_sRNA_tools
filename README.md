@@ -16,54 +16,57 @@ Usage
 >bash mapping_vRNAs.sh input.fastq reference.fasta
 
 ## 3 bam_sRNA_histogram.sh 
-Takes a sorted BAM file (in this case TOSV.bam) and provides a histogram output for mapped read lengths and also the first nucleotide of both forward and reverse orientation.
+Takes a sorted BAM file (in this case SFTS_S.bam) and provides a histogram output for mapped read lengths and the first nucleotide of both forward and reverse orientation.
 
 Tested with samtools v1.13, does not require index file.
 
 Usage:
 
->bash sRNA_histogram.sh input.bam
+>bash bam_sRNA_histogram.sh input.bam
 ```
 Example output:
-Chromosome: MT032308.1_Toscana_virus_isolate_1500590_segment_L
+Chromosome: KP202165.1_SFTS_virus_HB29_S
 Sense Read Sizes:
-Size  Counts  A  T  G  C
-----  ------  -  -  -  -
-18 327 147 61 78 41
-19 625 246 167 133 79
-20 889 285 283 190 131
-21 4600 1722 1474 619 785
-22 749 281 234 159 75
-23 526 173 172 114 67
-24 406 181 104 91 30
-25 414 176 105 102 31
-26 401 175 87 100 39
-27 593 238 136 165 54
-28 418 198 71 106 43
-29 125 37 24 53 11
-30 5 2  2 1
-31 5 2 1  2
-32 1   1
-33 1  1
-34 1  1
+Size Counts A T G C A% T% G% C%
+---- ------ - - - - -- -- -- --
+18 8 6 2 0 0 0.027 0.009 0.000 0.000
+19 7 0 3 2 2 0.000 0.013 0.009 0.009
+20 6 0 6 0 0 0.000 0.027 0.000 0.000
+21 18 2 2 12 2 0.009 0.009 0.054 0.009
+22 34 4 7 10 13 0.018 0.031 0.045 0.058
+23 16 0 11 3 2 0.000 0.049 0.013 0.009
+25 11 0 5 6 0 0.000 0.022 0.027 0.000
+26 44 9 26 5 4 0.040 0.117 0.022 0.018
+27 27 5 4 13 5 0.022 0.018 0.058 0.022
+28 18 10 6 2 0 0.045 0.027 0.009 0.000
+29 16 3 7 6 0 0.013 0.031 0.027 0.000
+30 8 2 5 1 0 0.009 0.022 0.004 0.000
+31 3 0 0 0 3 0.000 0.000 0.000 0.013
+32 4 4 0 0 0 0.018 0.000 0.000 0.000
+33 1 1 0 0 0 0.004 0.000 0.000 0.000
+35 1 0 0 0 1 0.000 0.000 0.000 0.004
+41 1 0 1 0 0 0.000 0.004 0.000 0.000
 
 Antisense Read Sizes:
-Size  Counts  A  T  G  C
-----  ------  -  -  -  -
-18 278 133 41 46 58
-19 793 324 152 169 148
-20 1118 441 210 268 199
-21 4131 1306 699 1210 916
-22 755 306 155 159 135
-23 481 158 121 106 96
-24 314 98 70 69 77
-25 270 105 70 54 41
-26 271 98 55 57 61
-27 263 90 59 74 40
-28 253 74 85 70 24
-29 46 16 9 15 6
-30 9 3  3 3
-31 2 1  1
+Size Counts A T G C A% T% G% C%
+---- ------ - - - - -- -- -- --
+18 12 2 3 7 0 0.006 0.010 0.023 0.000
+19 19 6 11 0 2 0.019 0.036 0.000 0.006
+20 37 3 6 13 15 0.010 0.019 0.042 0.049
+21 23 3 3 5 12 0.010 0.010 0.016 0.039
+22 44 24 7 4 9 0.078 0.023 0.013 0.029
+23 11 0 6 0 5 0.000 0.019 0.000 0.016
+24 17 2 5 6 4 0.006 0.016 0.019 0.013
+25 9 7 0 2 0 0.023 0.000 0.006 0.000
+26 35 5 11 3 16 0.016 0.036 0.010 0.052
+27 29 11 0 12 6 0.036 0.000 0.039 0.019
+28 19 8 4 2 5 0.026 0.013 0.006 0.016
+29 19 1 10 0 8 0.003 0.032 0.000 0.026
+30 24 1 9 5 9 0.003 0.029 0.016 0.029
+31 2 2 0 0 0 0.006 0.000 0.000 0.000
+32 7 2 0 0 5 0.006 0.000 0.000 0.016
+35 1 0 0 0 1 0.000 0.000 0.000 0.003
+
 ```
 ## 4 viral_sRNA_coverage.sh
 Takes a BAM file and subsets the bam file into 2 BAM files, one for vsiRNAs (21nt) mapped reads, and another for vpiRNAs (25-30nts). After producing the subsetted BAM files using bedtools it calculates coverage for each chromosome within the BAM file and produces three files per chromosome using the following nomenclature: {chromsomename}_21nt/piRNA_coverage_neg.tab {chromsomename}_21nt/piRNA_coverage_pos.tab and a {chromsomename}_combined coverage.tab.
