@@ -15,7 +15,7 @@ Usage
 
 >bash mapping_vRNAs.sh input.fastq reference.fasta
 
-## 3 sRNA_histogram.sh 
+## 3 bam_sRNA_histogram.sh 
 Takes a sorted BAM file (in this case TOSV.bam) and provides a histogram output for mapped read lengths and also the first nucleotide of both forward and reverse orientation.
 
 Tested with samtools v1.13, does not require index file.
