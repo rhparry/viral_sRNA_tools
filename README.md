@@ -7,6 +7,7 @@ Takes a fastq file (gzipped or otherwise) and calculates a histogram of read len
 Usage 
 
 >bash 1_fastq_histogram.sh input.fastq.gz
+>
 Or, if you want to run for every file in the current directory:
 >for f in *.fastq; do bash fastq_histogram_updated.sh $f > ${f%.fastq}_fqhisto.txt; done
 
