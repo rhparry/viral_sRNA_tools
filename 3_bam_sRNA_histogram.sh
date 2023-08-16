@@ -1,12 +1,12 @@
 #!/bin/bash
-#v0.3 sRNA histogram and first position bias script for BAM files bam_sRNA_histogram.sh
+#v0.3.1 sRNA histogram and first position bias script for BAM files 3_bam_sRNA_histogram.sh
 #Author: Rhys Parry r.parry@uq.edu.au University of Queensland
 #Needs samtools 
 #The following takes a bam file with mapped small RNA reads and outputs data usable for a histogram
 # Check if a BAM file has been provided
 if [ $# -eq 0 ]
   then
-    echo "No BAM file provided. Usage: bash bam_sRNA_histogram.sh <input.bam>"
+    echo "No BAM file provided. Usage: bash 3_bam_sRNA_histogram.sh <input.bam>"
     exit 1
 fi
 
@@ -37,11 +37,14 @@ do
   # Count the total number of mapped reads for antisense strand for the current chromosome
   total_antisense=$(samtools view -c -f 16 $input_bam $chr)
 
+  # Calculate the total number of mapped reads for both sense and antisense strands for the current chromosome
+  total=$((total_sense + total_antisense))
+
   # Count the number of mapped reads per size for sense strand and the number of reads that start with A, T, G, and C for the current chromosome
-  samtools view -F 16 $input_bam $chr | awk -v total=$total_sense '{ counts[length($10)]++; if(substr($10,10,1) == "A") a[length($10)]++; if(substr($10,10,1) == "T") t[length($10)]++; if(substr($10,10,1) == "G") g[length($10)]++; if(substr($10,10,1) == "C") c[length($10)]++ } END { for (size in counts) print size, counts[size], a[size]+0, t[size]+0, g[size]+0, c[size]+0,sprintf("%.3f", a[size]/total), sprintf("%.3f", t[size]/total), sprintf("%.3f", g[size]/total), sprintf("%.3f", c[size]/total) }' | sort -n > $output_sense
+  samtools view -F 16 $input_bam $chr | awk -v total=$total '{ counts[length($10)]++; if(substr($10,10,1) == "A") a[length($10)]++; if(substr($10,10,1) == "T") t[length($10)]++; if(substr($10,10,1) == "G") g[length($10)]++; if(substr($10,10,1) == "C") c[length($10)]++ } END { for (size in counts) print size, counts[size], a[size]+0, t[size]+0, g[size]+0, c[size]+0,sprintf("%.1f", a[size]/total*100), sprintf("%.1f", t[size]/total*100), sprintf("%.1f", g[size]/total*100), sprintf("%.1f", c[size]/total*100) }' | sort -n > $output_sense
 
   # Count the number of mapped reads per size for antisense strand and the number of reads that start with A, T, G, and C for the current chromosome
-  samtools view -f 16 $input_bam $chr | awk -v total=$total_antisense '{ counts[length($10)]++; if(substr($10,10,1) == "A") a[length($10)]++; if(substr($10,10,1) == "T") t[length($10)]++; if(substr($10,10,1) == "G") g[length($10)]++; if(substr($10,10,1) == "C") c[length($10)]++ } END { for (size in counts) print size, counts[size], a[size]+0,t[size]+0,g[size]+0,c[size]+0,sprintf("%.3f",a[size]/total),sprintf("%.3f",t[size]/total),sprintf("%.3f",g[size]/total),sprintf("%.3f",c[size]/total)}' | sort -n > $output_antisense
+  samtools view -f 16 $input_bam $chr | awk -v total=$total '{ counts[length($10)]++; if(substr($10,10,1) == "A") a[length($10)]++; if(substr($10,10,1) == "T") t[length($10)]++; if(substr($10,10,1) == "G") g[length($10)]++; if(substr($10,10,1) == "C") c[length($10)]++ } END { for (size in counts) print size, counts[size], a[size]+0,t[size]+0,g[size]+0,c[size]+0,sprintf("-%.1f",a[size]/total*100),sprintf("-%.1f",t[size]/total*100),sprintf("-%.1f",g[size]/total*100),sprintf("-%.1f",c[size]/total*100)}' | sort -n > $output_antisense
 
   # Output the results for the current chromosome
   echo "Chromosome: $chr"
