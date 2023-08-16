@@ -1,8 +1,11 @@
 #!/bin/bash
 #v0.2 Rhys Parry r.parry@uq.edu.au
-#Takes a fastq file (gzipped or otherwise) and calculates a histogram of read lengths and also outputs a table of the first nucleotide sequence.
+#Takes a fastq file (gzipped or otherwise), calculates a histogram of read lengths, and outputs a table of the first nucleotide sequence.
 #Also calculates the percentage of overall reads as separate columns.
-#Usage bash fastq_histogram.sh input.fastq.gz
+#Usage bash 1_fastq_histogram.sh input.fastq.gz
+#If you want to execute for all fastq files in the current directory, run the following one-liner:
+#for f in *.fastq; do bash 1_fastq_histogram_updated.sh $f > ${f%.fastq}_fqhisto.txt; done
+#Warning, as this uses base unix it is quite slow
 
 # Input fastq file
 input_fastq=$1
