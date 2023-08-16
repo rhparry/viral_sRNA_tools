@@ -1,12 +1,14 @@
 # viral_sRNA_bash
 This provides a range of bash scripts to examine small viral RNA signatures. To ensure you have compatibility for the BAM file with each script I would recommend running these scripts in the order that they have been numbered.
 
-## 1 fastq_histogram.sh
+## 1_fastq_histogram.sh
 Takes a fastq file (gzipped or otherwise) and calculates a histogram of read lengths and also outputs a table of the first nucleotide sequence.
 
 Usage 
 
->bash fastq_histogram.sh input.fastq.gz
+>bash 1_fastq_histogram.sh input.fastq.gz
+Or, if you want to run for every file in the current directory:
+>for f in *.fastq; do bash fastq_histogram_updated.sh $f > ${f%.fastq}_fqhisto.txt; done
 
 ## 2 mapping_vRNAs.sh
 Takes a fastq file and maps it against a reference using bowtie2 and suppresses unaligned reads and outputs a sorted bam file with only mapped reads. Tested with bowtie2 v2.4.5 and samtools v1.13.
