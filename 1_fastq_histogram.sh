@@ -1,5 +1,5 @@
 #!/bin/bash
-#v0.2 Rhys Parry r.parry@uq.edu.au
+#v0.3 Rhys Parry r.parry@uq.edu.au
 #Takes a fastq file (gzipped or otherwise), calculates a histogram of read lengths, and outputs a table of the first nucleotide sequence.
 #Also calculates the percentage of overall reads as separate columns.
 #Usage bash 1_fastq_histogram.sh input.fastq.gz
@@ -86,7 +86,7 @@ while read -r header; do
 done < $input_fastq
 
 # Output the histogram as a table with four additional columns for the counts and percentages of the first nucleotide of each read 
-echo -e "Length\tCount\tA\tC\tG\tT\tA%\tC%\tG%\tT%"
+echo -e "Length\tCount\tA\tT\tG\tC\tA%\tT%\tG%\tC%"
 for len in "${!hist[@]}"; do 
-    echo -e "$len\t${hist[$len]}\t${a_count[$len]:-0}\t${c_count[$len]:-0}\t${g_count[$len]:-0}\t${t_count[$len]:-0}\t$(bc <<< "scale=3; ${a_count[$len]:-0}/$total_count")\t$(bc <<< "scale=3; ${c_count[$len]:-0}/$total_count")\t$(bc <<< "scale=3; ${g_count[$len]:-0}/$total_count")\t$(bc <<< "scale=3; ${t_count[$len]:-0}/$total_count")"
+    echo -e "$len\t${hist[$len]}\t${a_count[$len]:-0}\t${t_count[$len]:-0}\t${g_count[$len]:-0}\t${c_count[$len]:-0}\t$(printf "%.2f" $(bc <<< "scale=3; ${a_count[$len]:-0}*100/$total_count"))\t$(printf "%.2f" $(bc <<< "scale=3; ${t_count[$len]:-0}*100/$total_count"))\t$(printf "%.2f" $(bc <<< "scale=3; ${g_count[$len]:-0}*100/$total_count"))\t$(printf "%.2f" $(bc <<< "scale=3; ${c_count[$len]:-0}*100/$total_count"))"
 done | sort -n -k1,1
