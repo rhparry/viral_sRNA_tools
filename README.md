@@ -11,14 +11,14 @@ Usage
 Or, if you want to run for every file in the current directory:
 >for f in *.fastq; do bash fastq_histogram_updated.sh $f > ${f%.fastq}_fqhisto.txt; done
 
-## 2 mapping_vRNAs.sh
+## 2_mapping_vRNAs.sh
 Takes a fastq file and maps it against a reference using bowtie2 and suppresses unaligned reads and outputs a sorted bam file with only mapped reads. Tested with bowtie2 v2.4.5 and samtools v1.13.
 
 Usage
 
 >bash mapping_vRNAs.sh input.fastq reference.fasta
 
-## 3 bam_sRNA_histogram.sh 
+## 3_bam_sRNA_histogram.sh 
 Takes a sorted BAM file (in this case SFTS_S.bam) and provides a histogram output for mapped read lengths and the first nucleotide of both forward and reverse orientation.
 
 Tested with samtools v1.13, does not require index file.
@@ -71,7 +71,7 @@ Size Counts A T G C A% T% G% C%
 35 1 0 0 0 1 0.000 0.000 0.000 0.003
 
 ```
-## 4 viral_sRNA_coverage.sh
+## 4_viral_sRNA_coverage.sh
 Takes a BAM file and subsets the bam file into 2 BAM files, one for vsiRNAs (21nt) mapped reads, and another for vpiRNAs (25-30nts). After producing the subsetted BAM files using bedtools it calculates coverage for each chromosome within the BAM file and produces three files per chromosome using the following nomenclature: {chromsomename}_21nt/piRNA_coverage_neg.tab {chromsomename}_21nt/piRNA_coverage_pos.tab and a {chromsomename}_combined coverage.tab.
 
 Tested with samtools v1.13 and bedtools v2.30.0
@@ -80,7 +80,7 @@ Usage:
 
 >bash viral_sRNA_coverage.sh input.bam
 
-## 5 extract_fw_rv_fasta.sh
+## 5_extract_fw_rv_fasta.sh
 Takes a sorted BAM file as input and outputs two fasta files, one for the forward reads and one for the reverse reads per chromosome using the following nomenclature:
 {bamfileprefix}_{chromsomename}_fw.fa and {bamfileprefix}_{chromsomename}_rv.fa. 
 
