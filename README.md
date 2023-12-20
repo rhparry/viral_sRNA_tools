@@ -1,31 +1,31 @@
 # viral_sRNA_bash
-This provides a range of bash scripts to examine small viral RNA signatures. To ensure you have compatibility for the BAM file with each script I would recommend running these scripts in the order that they have been numbered.
+This provides a range of bash scripts to examine small viral RNA signatures. To ensure compatibility for the BAM file with each script, I recommend running these scripts in the order they have been numbered.
 
 ## 1_fastq_histogram.sh
-Takes a fastq file (gzipped or otherwise) and calculates a histogram of read lengths and also outputs a table of the first nucleotide sequence.
+Takes a fastq file (gzipped or otherwise), calculates a histogram of read lengths, and outputs a table of the first nucleotide sequence.
 
 Usage 
 
 >bash 1_fastq_histogram.sh input.fastq.gz
 >
 Or, if you want to run for every file in the current directory:
->for f in *.fastq; do bash fastq_histogram_updated.sh $f > ${f%.fastq}_fqhisto.txt; done
+>for f in *.fastq; do bash 1_fastq_histogram_updated.sh $f > ${f%.fastq}_fqhisto.txt; done
 
 ## 2_mapping_vRNAs.sh
-Takes a fastq file and maps it against a reference using bowtie2 and suppresses unaligned reads and outputs a sorted bam file with only mapped reads. Tested with bowtie2 v2.4.5 and samtools v1.13.
+This script maps a fastq file against a reference using bowtie2, suppresses unaligned reads, and outputs a sorted bam file with only mapped reads. Tested with bowtie2 v2.4.5 and samtools v1.13.
 
 Usage
 
->bash mapping_vRNAs.sh input.fastq reference.fasta
+>bash 2_mapping_vRNAs.sh input.fastq reference.fasta
 
 ## 3_bam_sRNA_histogram.sh 
-Takes a sorted BAM file (in this case SFTS_S.bam) and provides a histogram output for mapped read lengths and the first nucleotide of both forward and reverse orientation.
+This script takes a sorted BAM file (SFTS_S.bam) and provides a histogram output for mapped read lengths and the first nucleotide of both forward and reverse orientation.
 
-Tested with samtools v1.13, does not require index file.
+This has been tested with samtools v1.13 and does not require an index file.
 
 Usage:
 
->bash bam_sRNA_histogram.sh input.bam
+>bash 3_bam_sRNA_histogram.sh input.bam
 ```
 Example output:
 Chromosome: KP202165.1_SFTS_virus_HB29_S
@@ -72,20 +72,20 @@ Size Counts A T G C A% T% G% C%
 
 ```
 ## 4_viral_sRNA_coverage.sh
-Takes a BAM file and subsets the bam file into 2 BAM files, one for vsiRNAs (21nt) mapped reads, and another for vpiRNAs (25-30nts). After producing the subsetted BAM files using bedtools it calculates coverage for each chromosome within the BAM file and produces three files per chromosome using the following nomenclature: {chromsomename}_21nt/piRNA_coverage_neg.tab {chromsomename}_21nt/piRNA_coverage_pos.tab and a {chromsomename}_combined coverage.tab.
+Takes a BAM file and subsets the bam file into 2 BAM files, one for vsiRNAs (21nt) mapped reads and another for vpiRNAs (25-30nts). After producing the subsetted BAM files using bedtools, it calculates coverage for each chromosome within the BAM file. It produces three files per chromosome using the following nomenclature: {chromname}_21nt/piRNA_coverage_neg.tab {chromname}_21nt/piRNA_coverage_pos.tab and a {chromsomename}_combined coverage.tab.
 
 Tested with samtools v1.13 and bedtools v2.30.0
 
 Usage:
 
->bash viral_sRNA_coverage.sh input.bam
+>bash 4_viral_sRNA_coverage.sh input.bam
 
 ## 5_extract_fw_rv_fasta.sh
-Takes a sorted BAM file as input and outputs two fasta files, one for the forward reads and one for the reverse reads per chromosome using the following nomenclature:
-{bamfileprefix}_{chromsomename}_fw.fa and {bamfileprefix}_{chromsomename}_rv.fa. 
+Takes a sorted BAM file as input and outputs two fasta files, one for the forward reads and one for the reverse reads per chromosome, using the following nomenclature:
+{bamfileprefix}_{chromsomename}_fw.fa and {bamfileprefix}_{chromsomename}_rv.fa. By default, it outputs all reads. However, you can specify a [-min=<MIN_SIZE>] [-max=<MAX_SIZE>]
 
 Tested with with samtools v 1.13.
 
 Usage:
 
->bash extract_fw_rv_fasta.sh input.bam
+>bash 5_extract_fw_rv_fasta.sh -i=<input.bam> [-min=<MIN_SIZE>] [-max=<MAX_SIZE>]
