@@ -1,5 +1,5 @@
 #!/bin/bash
-#v0.3 Rhys Parry r.parry@uq.edu.au
+#v0.3.1 Rhys Parry r.parry@uq.edu.au
 #Takes a fastq file (gzipped or otherwise), calculates a histogram of read lengths, and outputs a table of the first nucleotide sequence.
 #Also calculates the percentage of overall reads as separate columns.
 #Usage bash 1_fastq_histogram.sh input.fastq.gz
@@ -26,8 +26,11 @@ declare -A c_count
 declare -A g_count
 declare -A t_count
 
-# Initialize total count variable
-total_count=0
+# Initialize total counts for each nucleotide
+total_a=0
+total_c=0
+total_g=0
+total_t=0
 
 # Process the input fastq file
 while read -r header; do
@@ -48,7 +51,7 @@ while read -r header; do
     # Get the first nucleotide of the read
     first_nt=${seq:0:1}
 
-    # Update the counts of the first nucleotide of each read
+    # Update the counts of the first nucleotide of each read and total counts for each nucleotide.
     case $first_nt in
         A)
             if [[ -z ${a_count[$len]} ]]; then
@@ -56,6 +59,7 @@ while read -r header; do
             else
                 a_count[$len]=$((a_count[$len] + 1))
             fi
+            total_a=$((total_a + 1))
             ;;
         C)
             if [[ -z ${c_count[$len]} ]]; then
@@ -63,6 +67,7 @@ while read -r header; do
             else
                 c_count[$len]=$((c_count[$len] + 1))
             fi
+            total_c=$((total_c + 1))
             ;;
         G)
             if [[ -z ${g_count[$len]} ]]; then
@@ -70,6 +75,7 @@ while read -r header; do
             else
                 g_count[$len]=$((g_count[$len] + 1))
             fi
+            total_g=$((total_g + 1))
             ;;
         T)
             if [[ -z ${t_count[$len]} ]]; then
@@ -77,16 +83,24 @@ while read -r header; do
             else
                 t_count[$len]=$((t_count[$len] + 1))
             fi
+            total_t=$((total_t + 1))
             ;;
     esac
 
-    # Update total count variable 
-    total_count=$((total_count + 1))
-
 done < $input_fastq
 
-# Output the histogram as a table with four additional columns for the counts and percentages of the first nucleotide of each read 
-echo -e "Length\tCount\tA\tT\tG\tC\tA%\tT%\tG%\tC%"
-for len in "${!hist[@]}"; do 
-    echo -e "$len\t${hist[$len]}\t${a_count[$len]:-0}\t${t_count[$len]:-0}\t${g_count[$len]:-0}\t${c_count[$len]:-0}\t$(printf "%.2f" $(bc <<< "scale=3; ${a_count[$len]:-0}*100/$total_count"))\t$(printf "%.2f" $(bc <<< "scale=3; ${t_count[$len]:-0}*100/$total_count"))\t$(printf "%.2f" $(bc <<< "scale=3; ${g_count[$len]:-0}*100/$total_count"))\t$(printf "%.2f" $(bc <<< "scale=3; ${c_count[$len]:-0}*100/$total_count"))"
+# Calculate total reads
+total_reads=$((total_a + total_c + total_g + total_t))
+
+# Output the histogram as a table with four additional columns for the counts and percentages of the first nucleotide of each read.
+echo -e "Length\tCount\tA\tC\tG\tT\tA_percent\tC_percent\tG_percent\tT_percent"
+for len in "${!hist[@]}"; do
+
+    # Calculate percentages for each nucleotide count based on total overall reads.
+    a_percent=$(printf "%.3f" $(echo "${a_count[$len]:-0} / $total_reads * 100" | bc -l))
+    c_percent=$(printf "%.3f" $(echo "${c_count[$len]:-0} / $total_reads * 100" | bc -l))
+    g_percent=$(printf "%.3f" $(echo "${g_count[$len]:-0} / $total_reads * 100" | bc -l))
+    t_percent=$(printf "%.3f" $(echo "${t_count[$len]:-0} / $total_reads * 100" | bc -l))
+
+    echo -e "$len\t${hist[$len]}\t${a_count[$len]:-0}\t${c_count[$len]:-0}\t${g_count[$len]:-0}\t${t_count[$len]:-0}\t$a_percent\t$c_percent\t$g_percent\t$t_percent"
 done | sort -n -k1,1
