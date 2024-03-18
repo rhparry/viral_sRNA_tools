@@ -1,6 +1,6 @@
 #v0.1 Rhys H Parry r.parry@uq.edu.au
 #Takes a fastq file and outputs the proportion of bias in the 5' and 3' for each read length size.
-#Usage: python3 m5prime_3prime_bias.py input.fastq
+#Usage: python3 5prime_3prime_bias.py input.fastq
 
 import sys
 from Bio import SeqIO
