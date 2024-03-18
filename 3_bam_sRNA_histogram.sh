@@ -1,5 +1,5 @@
 #!/bin/bash
-#v0.3.1 sRNA histogram and first position bias script for BAM files 3_bam_sRNA_histogram.sh
+#v0.3.2 sRNA histogram and first position bias script for BAM files 3_bam_sRNA_histogram.sh
 #Author: Rhys Parry r.parry@uq.edu.au University of Queensland
 #Needs samtools
 #The following takes a bam file with mapped small RNA reads and outputs data usable for a histogram
