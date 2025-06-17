@@ -1,5 +1,5 @@
 #!/bin/bash
-#v0.3.2 sRNA histogram and first position bias script for BAM files 3_bam_sRNA_histogram.sh
+#v0.3.3 sRNA histogram and first position bias script for BAM files 3_bam_sRNA_histogram.sh
 #Author: Rhys Parry r.parry@uq.edu.au University of Queensland
 #Needs samtools
 #The following takes a bam file with mapped small RNA reads and outputs data usable for a histogram
@@ -66,10 +66,10 @@ do
   done
 
   # Count the number of mapped reads per size for sense strand and the number of reads that start with A, T, G, and C for the current chromosome
-  samtools view -F 16 $input_bam $chr | awk -v total=$total -v modifier=$modifier '{ counts[length($10)]++; if(substr($10,10,1) == "A") a[length($10)]++; if(substr($10,10,1) == "T") t[length($10)]++; if(substr($10,10,1) == "G") g[length($10)]++; if(substr($10,10,1) == "C") c[length($10)]++ } END { for (size=15; size<=30; size++) print size, (counts[size]/modifier)+0, (a[size]/modifier)+0, (t[size]/modifier)+0, (g[size]/modifier)+0, (c[size]/modifier)+0 }' | sort -n > $output_sense
+  samtools view -F 16 $input_bam $chr | awk -v total=$total -v modifier=$modifier '{ counts[length($10)]++; if(substr($10,1,1) == "A") a[length($10)]++; if(substr($10,1,1) == "T") t[length($10)]++; if(substr($10,1,1) == "G") g[length($10)]++; if(substr($10,1,1) == "C") c[length($10)]++ } END { for (size=15; size<=30; size++) print size, (counts[size]/modifier)+0, (a[size]/modifier)+0, (t[size]/modifier)+0, (g[size]/modifier)+0, (c[size]/modifier)+0 }' | sort -n > $output_sense
 
   # Count the number of mapped reads per size for antisense strand and the number of reads that start with A, T, G, and C for the current chromosome
-  samtools view -f 16 $input_bam $chr | awk -v total=$total -v modifier=$modifier '{ counts[length($10)]++; if(substr($10,10,1) == "A") a[length($10)]++; if(substr($10,10,1) == "T") t[length($10)]++; if(substr($10,10,1) == "G") g[length($10)]++; if(substr($10,10,1) == "C") c[length($10)]++ } END { for (size=15; size<=30; size++) print size, -(counts[size]/modifier), -(a[size]/modifier), -(t[size]/modifier), -(g[size]/modifier), -(c[size]/modifier)}' | sort -n > $output_antisense
+  samtools view -f 16 $input_bam $chr | awk -v total=$total -v modifier=$modifier '{ counts[length($10)]++; if(substr($10,1,1) == "A") a[length($10)]++; if(substr($10,1,1) == "T") t[length($10)]++; if(substr($10,1,1) == "G") g[length($10)]++; if(substr($10,1,1) == "C") c[length($10)]++ } END { for (size=15; size<=30; size++) print size, -(counts[size]/modifier), -(a[size]/modifier), -(t[size]/modifier), -(g[size]/modifier), -(c[size]/modifier)}' | sort -n > $output_antisense
 
   # Output the results for the current chromosome
   echo "Chromosome: $chr"
