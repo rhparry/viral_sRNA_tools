@@ -1,4 +1,4 @@
-# viral_sRNA_bash
+# viral_sRNA_tools
 This provides a range of bash scripts to examine small viral RNA signatures. To ensure compatibility for the BAM file with each script, I recommend running these scripts in the order they have been numbered.
 
 ## 1_fastq_histogram.sh
